@@ -9,8 +9,17 @@ describe('Restaurant testing', () => {
         };
         const response = await request(app).post('/restaurants').send(newRes);
         expect(response.status).toBe(200);
+        done();
         // expect(response.text).toEqual(newRes.name);
 
         
+    }),
+    it('gives the error array', async (req, res) => {
+        const fakeRes = {
+            name:'', location:'NJ', cuisine:'soul'
+        };
+        const response = await request(app).post('/restaurants').setEncoding(fakeRes);
+        expect(response.body).toHaveProperty("errors");
+        expect(Array.isArray(response.body.errors)).toBe(true);
     })
 })
